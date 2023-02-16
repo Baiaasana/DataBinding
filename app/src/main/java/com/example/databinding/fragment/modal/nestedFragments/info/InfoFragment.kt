@@ -6,17 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.databinding.R
 import com.example.databinding.databinding.FragmentInfoBinding
-import com.example.databinding.fragment.home.HomeFragment
-import com.example.databinding.fragment.modal.bottom_sheet.BottomSheetFragmentDirections
+
 import com.example.databinding.fragment.modal.bottom_sheet.BottomSheetViewModel
-import com.example.databinding.fragment.modal.nestedFragments.edit.EditFragmentDirections
-import com.example.databinding.mainActivity.MainActivity
 
 class InfoFragment : Fragment() {
 

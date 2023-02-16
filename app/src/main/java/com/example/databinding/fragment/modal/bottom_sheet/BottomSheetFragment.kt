@@ -11,8 +11,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.databinding.R
 import com.example.databinding.databinding.FragmentBottomSheetBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -36,10 +36,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                 override fun handleOnBackPressed() {
                     if (isEnabled) {
                         if (childFragmentManager.popBackStackImmediate()) {
-                            Toast.makeText(requireContext(), "back", Toast.LENGTH_SHORT).show()
                         } else {
                             dismiss()
-                            Toast.makeText(requireContext(), "dismiss", Toast.LENGTH_SHORT).show()
                         }
                     } else requireActivity().onBackPressed()
                 }
@@ -49,6 +47,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listeners()
+
 
 //        val navHostFragment =
 //            childFragmentManager.findFragmentById(R.id.nav_host_fragment_modal) as NavHostFragment
@@ -69,6 +68,5 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }

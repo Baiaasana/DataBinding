@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.databinding.R
 import com.example.databinding.databinding.FragmentHomeBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class HomeFragment : Fragment() {
 
@@ -38,6 +40,9 @@ class HomeFragment : Fragment() {
     private fun listeners(){
         binding.btnBottomSheet.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBottomSheetFragment())
+//            val view = layoutInflater.inflate(R.layout.fragment_bottom_sheet, null)
+//            val dialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetTheme)
+//            dialog.setContentView(view)
         }
     }
 

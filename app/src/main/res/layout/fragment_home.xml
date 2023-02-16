@@ -39,7 +39,7 @@
             android:hint="text"
             android:singleLine="true"
             android:paddingHorizontal="10dp"
-                        android:text="@={viewModel.name}"
+            android:text="@={viewModel.name}"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/textView"
             app:layout_constraintStart_toStartOf="@+id/textView"

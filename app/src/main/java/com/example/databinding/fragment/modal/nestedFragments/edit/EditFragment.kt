@@ -35,12 +35,7 @@ class EditFragment : Fragment() {
     private fun listeners() {
         binding.btnChange.setOnClickListener {
             viewModel.setName(binding.etName.text.toString())
-            findNavController().navigate(EditFragmentDirections.actionEditFragmentToInfoFragment())
+            requireActivity().onBackPressed()
         }
-
-        binding.btnBack.setOnClickListener {
-            findNavController().navigate(EditFragmentDirections.actionEditFragmentToInfoFragment())
-        }
-
     }
 }

@@ -44,9 +44,5 @@ class InfoFragment : Fragment() {
         binding.btnEdit.setOnClickListener {
             findNavController().navigate(InfoFragmentDirections.actionInfoFragmentToEditFragment())
         }
-        binding.btnBack.setOnClickListener {
-            val intent = Intent (activity, MainActivity::class.java)
-            this.activity?.startActivity(intent)
-        }
     }
 }

@@ -40,9 +40,6 @@ class HomeFragment : Fragment() {
     private fun listeners(){
         binding.btnBottomSheet.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBottomSheetFragment())
-//            val view = layoutInflater.inflate(R.layout.fragment_bottom_sheet, null)
-//            val dialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetTheme)
-//            dialog.setContentView(view)
         }
     }
 

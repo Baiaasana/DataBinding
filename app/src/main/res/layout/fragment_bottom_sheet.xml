@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:paddingVertical="20dp"
-    android:background="@drawable/bottom_sheet_background"
-    tools:context=".fragment.modal.bottom_sheet.BottomSheetFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.databinding.fragment.modal.bottom_sheet.BottomSheetViewModel" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="30dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="20dp"
+        android:layout_marginVertical="50dp"
+        android:background="@drawable/bottom_sheet_background"
+        tools:context=".fragment.modal.bottom_sheet.BottomSheetFragment">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/baseline_arrow_back_ios_24"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="User Info"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:gravity="center"/>
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="30dp"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/baseline_keyboard_arrow_down_24" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="20dp"
-        android:background="@android:color/darker_gray"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="User Info"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:gravity="center" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:id="@+id/nav_host_fragment_modal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/bottom_sheet_nav_graph" />
+        </LinearLayout>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@android:color/darker_gray" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:id="@+id/nav_host_fragment_modal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/bottom_sheet_nav_graph" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

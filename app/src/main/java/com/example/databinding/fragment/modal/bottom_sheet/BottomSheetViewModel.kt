@@ -1,5 +1,6 @@
 package com.example.databinding.fragment.modal.bottom_sheet
 
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

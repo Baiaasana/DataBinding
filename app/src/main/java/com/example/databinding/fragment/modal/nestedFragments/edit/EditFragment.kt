@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.databinding.R
 import com.example.databinding.databinding.FragmentEditBinding
 import com.example.databinding.fragment.modal.bottom_sheet.BottomSheetViewModel
+import com.example.databinding.fragment.modal.nestedFragments.info.InfoFragmentDirections
 
 class EditFragment : Fragment() {
 
@@ -36,6 +38,7 @@ class EditFragment : Fragment() {
         binding.btnChange.setOnClickListener {
             viewModel.setName(binding.etName.text.toString())
             requireActivity().onBackPressed()
+//                findNavController().navigateUp()
         }
     }
 }

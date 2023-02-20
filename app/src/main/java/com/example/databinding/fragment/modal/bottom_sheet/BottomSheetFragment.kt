@@ -1,6 +1,5 @@
 package com.example.databinding.fragment.modal.bottom_sheet
 
-
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -15,7 +14,6 @@ import com.example.databinding.databinding.FragmentBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 

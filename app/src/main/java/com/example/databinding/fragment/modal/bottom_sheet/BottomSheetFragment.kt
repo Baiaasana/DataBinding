@@ -8,19 +8,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsAnimationCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.example.databinding.R
 import com.example.databinding.databinding.FragmentBottomSheetBinding
-import com.example.keyboardevent.InsetsWithKeyboardAnimationCallback
-import com.example.keyboardevent.InsetsWithKeyboardCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ge.myprofile.mp.utils.keyBoardAnimation.InsetsWithKeyboardAnimationCallback
+import ge.myprofile.mp.utils.keyBoardAnimation.InsetsWithKeyboardCallback
 
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
@@ -31,7 +33,39 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("log", "onCreate")
+
+        // Inside the BottomSheetDialogFragment's onViewCreated() method
+        view?.let {
+            ViewCompat.setWindowInsetsAnimationCallback(it, object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                override fun onProgress(
+                    insets: WindowInsetsCompat,
+                    runningAnimations: MutableList<WindowInsetsAnimationCompat>
+                ): WindowInsetsCompat {
+                    val animation = runningAnimations.firstOrNull { it.typeMask == WindowInsetsCompat.Type.ime() }
+                    val translationY = animation?.interpolatedFraction?.let {
+                        // Calculate the vertical translation based on the keyboard height and the animation fraction
+                        // For example:
+                        // val keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                        // keyboardHeight * (1 - it)
+                        0 // Replace this with your calculation
+                    } ?: 0
+                    // Set the vertical translation of the bottom sheet
+                    view!!.translationY = translationY.toFloat()
+                    return insets
+                }
+            })
+        }
+
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        view?.post {
+            // Replace the following line with your EditText's ID
+            binding.etName.requestFocus()
+            dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        }
     }
 
     override fun onCreateView(
@@ -39,43 +73,42 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
         Log.d("log", "onCreateView")
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         return binding.root
     }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        Log.d("log", "onAttach")
-//        requireActivity().onBackPressedDispatcher.addCallback(this,
-//            object : OnBackPressedCallback(true) {
-//                override fun handleOnBackPressed() {
-//                    if (isEnabled) {
-//                        if ((childFragmentManager.findFragmentById(R.id.nav_host_fragment_modal) as NavHostFragment).navController.navigateUp()) {
-//                            binding.btnBack.animate().apply {
-//                                duration = 500
-//                                rotationBy(-90f)
-//                            }
-//                        } else {
-//                            dismiss()
-//                        }
-//                    } else requireActivity().onBackPressed()
-//                }
-//            })
-//    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("log", "onAttach")
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (isEnabled) {
+                        if ((childFragmentManager.findFragmentById(R.id.nav_host_fragment_modal) as NavHostFragment).navController.navigateUp()) {
+                            binding.btnBack.animate().apply {
+                                duration = 500
+                                rotationBy(-90f)
+                            }
+                        } else {
+                            dismiss()
+                        }
+                    } else requireActivity().onBackPressed()
+                }
+            })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("log", "onViewCreated")
-        WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false);
+        WindowCompat.setDecorFitsSystemWindows(dialog?.window!!, false);
+        dialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         setUpNavController()
         listeners()
 
-        val insetsWithKeyboardCallback = InsetsWithKeyboardCallback(requireActivity().window)
-        ViewCompat.setOnApplyWindowInsetsListener(requireView(), insetsWithKeyboardCallback)
-        ViewCompat.setWindowInsetsAnimationCallback(requireView(), insetsWithKeyboardCallback)
-
-        val insetsWithKeyboardAnimationCallback = InsetsWithKeyboardAnimationCallback(binding.rootId)
-        ViewCompat.setWindowInsetsAnimationCallback(binding.rootId, insetsWithKeyboardAnimationCallback)
-        showSoftKeyboard(binding.etName)
+//        setUpKeyboard()
+//        showSoftKeyboard(binding.etName)
     }
 
     private fun showSoftKeyboard(view: View) {
@@ -93,10 +126,9 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }, 1300)
     }
 
-
     private fun setUpKeyboard() {
         Log.d("log", "setUpKeyboard")
-        val insetsWithKeyboardCallback = InsetsWithKeyboardCallback(requireActivity().window)
+        val insetsWithKeyboardCallback = InsetsWithKeyboardCallback(dialog?.window!!)
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootId, insetsWithKeyboardCallback)
         ViewCompat.setWindowInsetsAnimationCallback(binding.rootId, insetsWithKeyboardCallback)
 
@@ -148,13 +180,10 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-
     private fun listeners() {
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressed()
         }
-
-
     }
 
     override fun onDestroyView() {

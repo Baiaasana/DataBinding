@@ -1,12 +1,10 @@
-package com.example.keyboardevent
+package ge.myprofile.mp.utils.keyBoardAnimation
 
 import android.os.Build
 import android.view.View
-import android.view.View.OnApplyWindowInsetsListener
 import android.view.Window
-import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
+import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsAnimationCompat

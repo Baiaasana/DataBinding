@@ -34,29 +34,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         super.onCreate(savedInstanceState)
         Log.d("log", "onCreate")
 
-        // Inside the BottomSheetDialogFragment's onViewCreated() method
-        view?.let {
-            ViewCompat.setWindowInsetsAnimationCallback(it, object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
-                override fun onProgress(
-                    insets: WindowInsetsCompat,
-                    runningAnimations: MutableList<WindowInsetsAnimationCompat>
-                ): WindowInsetsCompat {
-                    val animation = runningAnimations.firstOrNull { it.typeMask == WindowInsetsCompat.Type.ime() }
-                    val translationY = animation?.interpolatedFraction?.let {
-                        // Calculate the vertical translation based on the keyboard height and the animation fraction
-                        // For example:
-                        // val keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-                        // keyboardHeight * (1 - it)
-                        0 // Replace this with your calculation
-                    } ?: 0
-                    // Set the vertical translation of the bottom sheet
-                    view!!.translationY = translationY.toFloat()
-                    return insets
-                }
-            })
-        }
-
-        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
     }
 
     override fun onStart() {
@@ -107,7 +85,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         setUpNavController()
         listeners()
 
-//        setUpKeyboard()
+        setUpKeyboard()
 //        showSoftKeyboard(binding.etName)
     }
 
@@ -132,8 +110,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootId, insetsWithKeyboardCallback)
         ViewCompat.setWindowInsetsAnimationCallback(binding.rootId, insetsWithKeyboardCallback)
 
-        val insetsWithKeyboardAnimationCallback = InsetsWithKeyboardAnimationCallback(binding.etName)
-        ViewCompat.setWindowInsetsAnimationCallback(binding.etName, insetsWithKeyboardAnimationCallback)
+        val insetsWithKeyboardAnimationCallback = InsetsWithKeyboardAnimationCallback(binding.rootId)
+        ViewCompat.setWindowInsetsAnimationCallback(binding.rootId, insetsWithKeyboardAnimationCallback)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
